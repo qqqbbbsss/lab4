@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox prefHeight="519.0" prefWidth="321.0" spacing="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.12" fx:controller="gui.WindowController">
+    <padding>
+        <Insets bottom="10" left="10" right="10" top="10" />
+    </padding>
+
+    <Label text="Входные данные " />
+    <TextArea fx:id="inputArea" prefHeight="200" prefWidth="222.0" />
+
+    <Button onAction="#onProcess" text="Обработать" />
+
+    <Label text="Результат " />
+    <ListView fx:id="outputList" prefHeight="200" prefWidth="258.0" />
+
+</VBox>

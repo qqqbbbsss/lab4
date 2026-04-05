@@ -5,7 +5,34 @@ import java.util.List;
 
 public class DataProcessor {
 
-    public List<Double> toNumbers(String[] data) throws NumberFormatException {
+    public List<Double> processData(List<Double> in) {
+        if (in == null || in.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        List<Double> out = new ArrayList<>();
+        out.add(in.get(0));
+
+        for (int i = 1; i < in.size(); i++) {
+            if (!in.get(i).equals(in.get(i - 1))) {
+                out.add(in.get(i));
+            }
+        }
+        return out;
+    }
+
+    public String[] processPipeline(String[] in) {
+        try {
+            List<Double> nums = toNumbers(in);
+            List<Double> res = processData(nums);
+            return toStrs(res);
+        } catch (NumberFormatException e) {
+            System.err.println("ошибка: " + e.getMessage());
+            return new String[0];
+        }
+    }
+
+    private List<Double> toNumbers(String[] data) throws NumberFormatException {
         List<Double> nums = new ArrayList<>();
         for (String s : data) {
             s = s.trim();
@@ -16,63 +43,16 @@ public class DataProcessor {
         return nums;
     }
 
-    public String[] toStrs(List<Double> nums) {
+    private String[] toStrs(List<Double> nums) {
         String[] res = new String[nums.size()];
         for (int i = 0; i < nums.size(); i++) {
-            double val = nums.get(i);
-            if (val == (long) val) {
-                res[i] = String.valueOf((long) val);
+            double v = nums.get(i);
+            if (v == (long) v) {
+                res[i] = String.valueOf((long) v);
             } else {
-                res[i] = String.valueOf(val);
+                res[i] = String.valueOf(v);
             }
         }
         return res;
-    }
-
-    public List<Integer> toInts(List<Double> nums) {
-        List<Integer> ints = new ArrayList<>();
-        for (Double d : nums) {
-            ints.add(d.intValue());
-        }
-        return ints;
-    }
-
-    public List<Double> toDoubles(List<Integer> ints) {
-        List<Double> dubs = new ArrayList<>();
-        for (Integer i : ints) {
-            dubs.add(i.doubleValue());
-        }
-        return dubs;
-    }
-
-    public List<Integer> variant3(List<Integer> lst) {
-        if (lst == null || lst.isEmpty()) {
-            return new ArrayList<>();
-        }
-        List<Integer> res = new ArrayList<>();
-        res.add(lst.get(0));
-        for (int i = 1; i < lst.size(); i++) {
-            if (!lst.get(i).equals(lst.get(i - 1))) {
-                res.add(lst.get(i));
-            }
-        }
-        return res;
-    }
-
-    public List<Double> process(List<Double> nums) {
-        List<Integer> ints = toInts(nums);
-        List<Integer> proc = variant3(ints);
-        return toDoubles(proc);
-    }
-
-    public String[] pipeline(String[] input) {
-        try {
-            List<Double> nums = toNumbers(input);
-            List<Double> proc = process(nums);
-            return toStrs(proc);
-        } catch (NumberFormatException e) {
-            System.err.println("ошибка: " + e.getMessage());
-            return new String[0];
-        }
     }
 }

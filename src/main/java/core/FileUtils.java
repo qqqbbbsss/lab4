@@ -25,4 +25,16 @@ public class FileUtils {
             }
         }
     }
+
+    public static String[] toArr(List<String> list) {
+        return list.toArray(new String[0]);
+    }
+
+    public static List<String> toList(String[] arr) {
+        List<String> list = new ArrayList<>();
+        for (String s : arr) {
+            list.add(s);
+        }
+        return list;
+    }
 }

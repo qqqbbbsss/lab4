@@ -24,36 +24,36 @@ public class WindowApp extends Application {
 
         Label err = new Label();
 
-        Label l2 = new Label("результат:");
+        Label l2 = new Label("числа удалены:");
         ListView<String> lv = new ListView<>();
         lv.setPrefHeight(200);
 
         btn.setOnAction(e -> {
             err.setText("");
             String txt = ta.getText();
-
             if (txt.trim().isEmpty()) {
-                err.setText("ошибка:");
+                err.setText("введите числа");
                 return;
             }
 
-            String[] inLines = txt.split("\\r?\\n");
-            String[] outLines = dp.processPipeline(inLines);
+            String[] lines = txt.split("\\r?\\n");
+            String[] res = dp.pipeline(lines);
 
-            if (outLines.length == 0 && inLines.length > 0) {
-                err.setText("ошибка: ");
+            if (res.length == 0 && lines.length > 0) {
+                err.setText("введите корректные числа");
                 return;
             }
 
             lv.getItems().clear();
-            lv.getItems().addAll(outLines);
+            lv.getItems().addAll(res);
         });
 
         VBox root = new VBox(10);
         root.setPadding(new javafx.geometry.Insets(10));
         root.getChildren().addAll(l1, ta, btn, err, l2, lv);
 
-        Scene sc = new Scene(root, 450, 550);
+        Scene sc = new Scene(root, 400, 500);
+        stage.setTitle("удаление дубликатов, вариант 3");
         stage.setScene(sc);
         stage.show();
     }
